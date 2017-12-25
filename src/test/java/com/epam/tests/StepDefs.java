@@ -7,6 +7,7 @@ import cucumber.api.java.en.When;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import static com.epam.pages.WebDriverFactory.getDriver;
 import static org.junit.Assert.assertTrue;
 
 
@@ -17,15 +18,6 @@ public class StepDefs {
 
     /*static WebDriver driver;*/
     HomePage homePage = new HomePage();
-
-  /*  public static WebDriver getDriver(){
-        if (driver == null){
-            System.setProperty("webdriver.chrome.driver", "D:\\Taras\\automation\\driver\\chromedriver.exe");
-            driver = new ChromeDriver();
-        }
-
-        return driver;
-    }*/
 
     @Given("I am an anonymous customer with clear cookies")
     public void clearCookies() {

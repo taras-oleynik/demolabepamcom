@@ -9,26 +9,28 @@ import org.openqa.selenium.firefox.FirefoxDriver;
  */
 public class WebDriverFactory {
 
-    protected static WebDriver driver;
+
+   // public static final WebDriver DEFAULT_FF = new FirefoxDriver();
+ //  protected static WebDriver driver;
 
     private static String browserType = "chrome";
 
 
     public static WebDriver getDriver() {
-        if (driver == null) {
-            switch (browserType) {
-                case "chrome":
-                    System.setProperty("webdriver.chrome.driver", "D:\\Taras\\automation\\driver\\chromedriver.exe");
-                    //ChromeDriverManager.getInstance().setup();
-                    driver = new ChromeDriver();
-                    break;
-
-                case "firefox":
-                    driver = new FirefoxDriver();
-                    break;
-            }
+        WebDriver driver = null;
+        if (browserType=="firefox") {
+            driver = new FirefoxDriver();
+        } else if (browserType=="chrome") {
+            System.setProperty("webdriver.chrome.driver", "D:\\Taras\\automation\\driver\\chromedriver.exe");
+            driver = new ChromeDriver();
         }
         return driver;
-    }
 
+
+
+
+ 
+    }
 }
+
+

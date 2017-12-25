@@ -4,7 +4,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import static com.epam.tests.StepDefs.getDriver;
+import static com.epam.pages.WebDriverFactory.getDriver;
+
 
 public class HomePage {
 
