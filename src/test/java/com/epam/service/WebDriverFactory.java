@@ -14,30 +14,25 @@ public class WebDriverFactory {
 
     public static WebDriver getDriver() {
         if (driver == null) {
-
-
             if (browserType == Browser.FIREFOX) {
-
                 WebDriverManager.firefoxdriver().setup();
                 driver = new FirefoxDriver();
 
-
             } else if (browserType == Browser.CHROME) {
                 WebDriverManager.chromedriver().setup();
-
                 ChromeOptions chromeOptions = new ChromeOptions();
                 chromeOptions.addArguments("--start-maximized");
                 driver = new ChromeDriver(chromeOptions);
             }
         }
         return driver;
-
-
     }
 
+    public static WebDriver setDriverToNull() {
+        return driver = null;
+    }
 
     enum Browser {
         CHROME, FIREFOX
-
     }
 }

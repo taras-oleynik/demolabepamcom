@@ -16,7 +16,7 @@ Feature: Product search result page
     Then all products contain image, price, button "Add to cart"
 
   Scenario: Add to cart
-    When click "Add to cart" button for product "RT-AG"
+    When click "Add to cart" button for product "RT-AG 230"
     Then add to cart confirmation pop-up appears
 
   #Scenario: Go to PDP

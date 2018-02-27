@@ -19,7 +19,7 @@ public class HomePageStepDefs {
     }
 
     public void checkSearchUponRecuest() {
-        homePage.search.searchUponRequest("camera").verifyAllSearchResultsContainPrice();
+        assertTrue(homePage.search.searchUponRequest("camera").verifyAllSearchResultsContainPrice());
 
     }
 

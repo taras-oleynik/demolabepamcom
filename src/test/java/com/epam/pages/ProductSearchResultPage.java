@@ -16,6 +16,11 @@ public class ProductSearchResultPage extends AbstractPage {
 
 
     public boolean verifyAllSearchResultsContainPrice() {
+        //lambda example
+        /*return searchResults.stream()
+                .map(el -> el.findElement(By.cssSelector(".price")).getText().length())
+                .allMatch(priceLength -> priceLength > 0);*/
+
         boolean isPriceExists = true;
         for (WebElement elem : searchResults) {
             if (elem.findElement(By.cssSelector(".price")).getText().length() == 0) {
@@ -25,12 +30,6 @@ public class ProductSearchResultPage extends AbstractPage {
             }
         }
         return isPriceExists;
-    }
-
-    public boolean blabla() {
-        return searchResults.stream()
-                .map(el -> el.findElement(By.cssSelector(".price")).getText().length())
-                .allMatch(l -> l > 0);
     }
 
     public List<WebElement> getFirstNproductsWithName(String productName, int productsqty) {
@@ -48,45 +47,62 @@ public class ProductSearchResultPage extends AbstractPage {
 
 
     public boolean allProductsContainImage(List<WebElement> list) {
+        boolean allProductsContain = true;
         for (WebElement element : list) {
             if (!element.findElement(By.cssSelector(".thumb img")).isDisplayed()) {
-                return false;
+                allProductsContain = false;
+                break;
             }
         }
-        return true;
+        return allProductsContain;
     }
 
 
     public boolean allProductsContainPrice(List<WebElement> list) {
+        boolean allProductsContain = true;
         for (WebElement element : list) {
             if (!element.findElement(By.cssSelector(".price")).isDisplayed()) {
-                return false;
+                allProductsContain = false;
+                break;
             }
         }
-        return true;
+        return allProductsContain;
     }
 
 
     public boolean allProductsContainButtonText(String buttonText, List<WebElement> list) {
-        for (WebElement element : list) {
-            if (!element.findElement(By.cssSelector(".js-enable-btn")).isDisplayed()&&
-                    element.findElement(By.cssSelector(".js-enable-btn")).getText().contains(buttonText)) {
-                return false;
+        //lambda example
+        /*return list.stream().allMatch(element -> element.findElement(By.cssSelector(".js-enable-btn")).isDisplayed()
+                && element.findElement(By.cssSelector(".js-enable-btn")).getAttribute("textContent").contains(buttonText));*/
+
+         boolean allProductsContain = true;
+         for (WebElement element : list) {
+            if (!element.findElement(By.cssSelector(".js-enable-btn")).isDisplayed()||
+                    !element.findElement(By.cssSelector(".js-enable-btn")).getAttribute("textContent").contains(buttonText)) {
+                allProductsContain = false;
+                break;
             }
         }
-        return true;
+        return allProductsContain;
     }
 
-    public void clickButtonByName(String buttonName, WebElement element){
-      if(element.findElement(By.tagName("button")).getText().contains(buttonName)){
-          element.click();
-      }
+    private void clickButtonByName(String buttonName, WebElement element) {
+        //lambda example
+        /*element.findElements(By.tagName("button"))
+                .stream()
+                .filter(button -> button.getAttribute("textContent").contains(buttonName))
+                .forEach(WebElement::click);*/
+
+        for (WebElement button : element.findElements(By.tagName("button"))) {
+            if (button.getAttribute("textContent").contains(buttonName)) {
+                button.click();
+            }
+        }
     }
 
-    public void clickOnSelectedButtonOnSelectedProduct(String buttonText, String productName, List<WebElement> list) {
-        for (WebElement element : list){
-            if(element.findElement(By.cssSelector(".name")).getText().contains(productName)){
-                //element.findElement(By.cssSelector(".js-enable-btn")).click();
+    public void clickOnSelectedButtonOnSelectedProduct(String buttonText, String productName) {
+        for (WebElement element : searchResults) {
+            if (element.findElement(By.cssSelector(".name")).getText().contains(productName)) {
                 clickButtonByName(buttonText, element);
             }
         }
