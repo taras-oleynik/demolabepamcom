@@ -19,6 +19,8 @@ Feature: Product search result page
     When click "Add to cart" button for product "RT-AG 230"
     Then add to cart confirmation pop-up appears
 
-  #Scenario: Go to PDP
-    #When click on product "RT-AG" on search result page
-    #Then I am redirected on product details page
+  Scenario: Go to PDP
+    When click on product "RT-AG 230" on search result page
+    Then I am redirected on product details page
+
+

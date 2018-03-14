@@ -1,6 +1,7 @@
 package com.epam.tests;
 
 import com.epam.pages.HomePage;
+import com.epam.pages.ProductDetailsPage;
 import com.epam.pages.ProductSearchResultPage;
 import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
@@ -17,7 +18,8 @@ import static org.junit.Assert.assertTrue;
 public class ProductSearchResultPageStepDefs {
     HomePage homePage = new HomePage();
     ProductSearchResultPage productSearchResultPage = new ProductSearchResultPage();
-    List<WebElement> filteredList = new ArrayList<>();
+    ProductDetailsPage productDetailsPage = new ProductDetailsPage();
+    List<WebElement> filteredList = new ArrayList<WebElement>();
 
     @And("^I search for \"([^\"]*)\"$")
     public void searchFor(String searchQuery) {
@@ -43,22 +45,30 @@ public class ProductSearchResultPageStepDefs {
     }
 
     @When("^click \"([^\"]*)\" button for product \"([^\"]*)\"$")
-    public void click_button_for_product(String buttonName, String productName) {
+    public void clickButtonForProduct(String buttonName, String productName) {
         productSearchResultPage.clickOnSelectedButtonOnSelectedProduct(buttonName, productName);
     }
 
     @Then("^add to cart confirmation pop-up appears$")
-    public void add_to_cart_confirmation_pop_up_appears() {
-        throw new PendingException();
+    public void addToCartConfirmationPopUpAppears() {
+        assertTrue("pop up not visible",productSearchResultPage.isPopUpVisible());
+
     }
 
     @When("^click on product \"([^\"]*)\" on search result page$")
-    public void click_on_product_on_search_result_page(String arg1) {
-        //TODO
+    public void clickOnProductOnSearchResultPage(String arg1) {
+        productSearchResultPage.clickOnTheFirstElement();
     }
 
     @Then("^I am redirected on product details page$")
-    public void i_am_redirected_on_product_details_page() {
-        //TODO
+    public void iamRedirectedOnProductDetailsPage() {
+       assertTrue("PDP is not opened",productDetailsPage.isPDPVisible());
     }
+
+    /*@Then("^add to cart confirmation pop-up appears$")
+    public void confirmationPopUpAppears() throws Throwable {
+        assertTrue("pop up is visible",productSearchResultPage.isPopUpAddToCartVisible());
+
+
+    }*/
 }

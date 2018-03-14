@@ -13,6 +13,10 @@ public class ProductSearchResultPage extends AbstractPage {
     private List<WebElement> searchResults;
     @FindBy(css = ".js-enable-btn")
     private WebElement addToCartButton;
+    @FindBy(css = "#cboxLoadedContent")
+    private WebElement addToCartPopUp;
+    @FindBy(css = ".headline-text .headline-text")
+    private WebElement popUpMessage;
 
 
     public boolean verifyAllSearchResultsContainPrice() {
@@ -33,7 +37,7 @@ public class ProductSearchResultPage extends AbstractPage {
     }
 
     public List<WebElement> getFirstNproductsWithName(String productName, int productsqty) {
-        List<WebElement> list = new ArrayList<>();
+        List<WebElement> list = new ArrayList<WebElement>();
         for (WebElement element : searchResults) {
             if (element.findElement(By.cssSelector(".name")).getText().contains(productName)) {
                 list.add(element);
@@ -75,9 +79,9 @@ public class ProductSearchResultPage extends AbstractPage {
         /*return list.stream().allMatch(element -> element.findElement(By.cssSelector(".js-enable-btn")).isDisplayed()
                 && element.findElement(By.cssSelector(".js-enable-btn")).getAttribute("textContent").contains(buttonText));*/
 
-         boolean allProductsContain = true;
-         for (WebElement element : list) {
-            if (!element.findElement(By.cssSelector(".js-enable-btn")).isDisplayed()||
+        boolean allProductsContain = true;
+        for (WebElement element : list) {
+            if (!element.findElement(By.cssSelector(".js-enable-btn")).isDisplayed() ||
                     !element.findElement(By.cssSelector(".js-enable-btn")).getAttribute("textContent").contains(buttonText)) {
                 allProductsContain = false;
                 break;
@@ -107,4 +111,21 @@ public class ProductSearchResultPage extends AbstractPage {
             }
         }
     }
+
+    public boolean isPopUpAddToCartVisible() {
+
+
+        return addToCartPopUp.isDisplayed();
+    }
+
+    public boolean isPopUpVisible() {
+
+        return popUpMessage.isDisplayed();
+    }
+
+    public ProductDetailsPage clickOnTheFirstElement() {
+        searchResults.get(0).findElement(By.cssSelector(".thumb")).click();
+        return new ProductDetailsPage();
+    }
+
 }
