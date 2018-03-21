@@ -25,7 +25,21 @@ public class ProductSearchResultPage extends AbstractPage {
                 .map(el -> el.findElement(By.cssSelector(".price")).getText().length())
                 .allMatch(priceLength -> priceLength > 0);*/
 
+       /* searchResults.stream().forEach(e -> e.click());
+        searchResults.stream().map(e -> e.getText()).map(e -> Integer.parseInt(e));
+        searchResults.stream().allMatch(e -> e.findElement(By.className("")).isDisplayed());
+        searchResults.stream()
+                .filter(e -> e.getText().contains("new"))
+                .map(e -> e.getText())
+                .map(e -> Integer.parseInt(e));*/
+
+
         boolean isPriceExists = true;
+
+        /*convert into lambda searchResults.stream()
+                .allMatch(element -> element
+                .findElement(By.cssSelector(".price")).getText().length() == 0);*/
+
         for (WebElement elem : searchResults) {
             if (elem.findElement(By.cssSelector(".price")).getText().length() == 0) {
                 isPriceExists = false;
@@ -123,8 +137,8 @@ public class ProductSearchResultPage extends AbstractPage {
         return popUpMessage.isDisplayed();
     }
 
-    public ProductDetailsPage clickOnTheFirstElement() {
-        searchResults.get(0).findElement(By.cssSelector(".thumb")).click();
+    public ProductDetailsPage clickOnTheElement(int index) {
+        searchResults.get(index).findElement(By.cssSelector(".thumb")).click();
         return new ProductDetailsPage();
     }
 

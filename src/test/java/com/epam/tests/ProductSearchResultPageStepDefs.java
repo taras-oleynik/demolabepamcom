@@ -3,7 +3,6 @@ package com.epam.tests;
 import com.epam.pages.HomePage;
 import com.epam.pages.ProductDetailsPage;
 import com.epam.pages.ProductSearchResultPage;
-import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -57,12 +56,13 @@ public class ProductSearchResultPageStepDefs {
 
     @When("^click on product \"([^\"]*)\" on search result page$")
     public void clickOnProductOnSearchResultPage(String arg1) {
-        productSearchResultPage.clickOnTheFirstElement();
+        int firstElement = 0;
+        productSearchResultPage.clickOnTheElement(firstElement);
     }
 
     @Then("^I am redirected on product details page$")
     public void iamRedirectedOnProductDetailsPage() {
-       assertTrue("PDP is not opened",productDetailsPage.isPDPVisible());
+        assertTrue("PDP is not opened",productDetailsPage.isPDPVisible());
     }
 
     /*@Then("^add to cart confirmation pop-up appears$")
