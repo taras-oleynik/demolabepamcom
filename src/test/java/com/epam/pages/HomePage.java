@@ -1,10 +1,10 @@
 package com.epam.pages;
 
+import com.epam.service.WebDriverFactory;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-
-import java.util.List;
 
 import static com.epam.service.WebDriverFactory.getDriver;
 
@@ -23,7 +23,11 @@ public class HomePage extends AbstractPage {
     private WebElement navigationMenu;
 
 
-
+    public ProductSearchResultPage findProductWithExactProductNumber(String exactProductNumber) {
+        searchField.sendKeys(exactProductNumber);
+        searchField.sendKeys(Keys.ENTER);
+        return new ProductSearchResultPage();
+    }
 
  /*   public List<WebElement> filterProductByPrice() {
         List<WebElement> allProductsCamera;
@@ -31,12 +35,10 @@ public class HomePage extends AbstractPage {
 
     }*/
 
-public String getPageTitle(){
-    String pageTitle =getDriver().getTitle();
+    public String getPageTitle() {
+        return getDriver().getTitle();//needs to be confirm
 
-    return pageTitle;//needs to be confirm
-
-}
+    }
 
     public boolean isSearchWorks() {
         search.searchUponRequest("");
@@ -70,10 +72,10 @@ public String getPageTitle(){
         return navigationMenu.isDisplayed();
     }
 
-public ProductSearchResultPage searchForProduct(String productName){
+    public ProductSearchResultPage searchForProduct(String productName) {
 
-    searchField.sendKeys(productName);
-    searchField.sendKeys(Keys.ENTER);
-    return new ProductSearchResultPage();
-}
+        searchField.sendKeys(productName);
+        searchField.sendKeys(Keys.ENTER);
+        return new ProductSearchResultPage();
+    }
 }

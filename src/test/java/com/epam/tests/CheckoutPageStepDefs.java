@@ -1,58 +1,88 @@
 package com.epam.tests;
 
+import com.epam.pages.*;
 import cucumber.api.DataTable;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
-/**
- * Created by Taras_Oliinyk on 3/16/2018.
- */
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+
+/*Given I select "Add to cart" for product "1934793"
+        And I select "Checkout" in cart pop-up
+        And I am redirected to the cart page
+        And I can view order summary*/
+
+
 public class CheckoutPageStepDefs {
+    private static final int FIRST_ELEMENT_OF_LIST = 0;
+    // Given I select "Add to cart" for product "1934793"
+    ProductSearchResultPage productSearchResultPage = new ProductSearchResultPage();
+    CheckoutPage checkoutPage = new CheckoutPage();
+    HomePage homePage = new HomePage();
+    CartPage cartPage = new CartPage();
+    SignInPage signInPage = new SignInPage();
+    PaymentTypePage paymentTypePage = new PaymentTypePage();
 
+    //Given I select "Add to cart" for product "693923"
     @Given("^I select \"([^\"]*)\" for product \"([^\"]*)\"$")
-    public void i_select_for_product(String arg1, String arg2) throws Throwable {
+    public void selectForProduct(String buttonName, String productNumber) throws Throwable {
+        ProductSearchResultPage searchResultPage = homePage.findProductWithExactProductNumber(productNumber);
+        productSearchResultPage.clickButtonFromListByName(buttonName, FIRST_ELEMENT_OF_LIST);
+
 
     }
 
+    //And I select "Checkout" in cart pop-up
     @Given("^I select \"([^\"]*)\" in cart pop-up$")
-    public void i_select_in_cart_pop_up(String arg1) throws Throwable {
+    public void selectCheckoutInCartPopUp(String buttonName) throws Throwable {
+        checkoutPage.clickOnCheckoutButton(buttonName);
 
     }
 
+
+    // And I am redirected to the cart page rederection in past step
     @Given("^I am redirected to the cart page$")
-    public void i_am_redirected_to_the_cart_page() throws Throwable {
+    public void iamRedirectedToCartPage() throws Throwable {
+        assertEquals("CART", cartPage.getCartTextonPage());
 
     }
 
     @Given("^I can view order summary$")
-    public void i_can_view_order_summary(DataTable arg1) throws Throwable {
+    public void iCanViewOrderSummary(DataTable table) throws Throwable {
 
+        List<List<String>> data = table.raw();
+        assertEquals(data.get(1).get(0), cartPage.getOrderSubTotal());
+        assertEquals(data.get(1).get(1), cartPage.getOrderTotal());
+
+
+        //System.out.println(data.get(1).get(0));
     }
 
     @Given("^I click \"([^\"]*)\" button after redirect to cart page$")
-    public void i_click_button_after_redirect_to_cart_page(String arg1) throws Throwable {
-
+    public void iClickOnbuttonAndRidirectToSignInPage(String buttonName) throws Throwable {
+        cartPage.clickOnCheckoutButtonOnCartPage(buttonName);
     }
 
     @Given("^I set \"([^\"]*)\" as e-mail address$")
-    public void i_set_as_e_mail_address(String arg1) throws Throwable {
-
+    public void iSetAsEmail_address(String email) throws Throwable {
+        signInPage.setEmailAddress(email);
     }
 
-    @Given("^I proceed to checkout as a Guest user$")
-    public void i_proceed_to_checkout_as_a_Guest_user() throws Throwable {
-
-    }
-
-    @Given("^I am redirected to multicheckout delivery address page$")
-    public void i_am_redirected_to_multicheckout_delivery_address_page() throws Throwable {
-
+    @Given("^I set \"([^\"]*)\" as a password$")
+    public void iSetAsPassword(String password) throws Throwable {
+        signInPage.setPassword(password);
+        signInPage.clickOnLoginAndCheckoutButton();
+        Thread.sleep(2000);
     }
 
     @Given("^I have the following final review$")
-    public void i_have_the_following_final_review(DataTable arg1) throws Throwable {
-
+    public void iHaveFinalReview(DataTable filalReviewTable) throws Throwable {
+        List<List<String>> data = filalReviewTable.raw();
+        assertEquals(data.get(1).get(0), paymentTypePage.getOrderSubTotal().replaceAll("\\w+\\:\\n", ""));
+        assertEquals(data.get(1).get(0), paymentTypePage.getOrderTotal().replaceAll("[^\\d\\\\.\\\\$]", ""));
     }
 
     @Given("^I fill in delivery address information$")
@@ -155,8 +185,6 @@ public class CheckoutPageStepDefs {
     public void mini_cart_icon_on_home_page_shows_items_in_cart(int arg1) throws Throwable {
 
     }
-
-
 
 
 }

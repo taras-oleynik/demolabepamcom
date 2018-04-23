@@ -65,7 +65,7 @@ public class ProductSearchResultPageStepDefs {
         assertTrue("PDP is not opened",productDetailsPage.isPDPVisible());
     }
 
-    /*@Then("^add to cart confirmation pop-up appears$")
+   /* @Then("^add to cart confirmation pop-up appears$")
     public void confirmationPopUpAppears() throws Throwable {
         assertTrue("pop up is visible",productSearchResultPage.isPopUpAddToCartVisible());
 
