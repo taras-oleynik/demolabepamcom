@@ -86,7 +86,7 @@ public class CheckoutPageStepDefs {
     }
 
     @Given("^I fill in delivery address information$")
-    public void i_fill_in_delivery_address_information(DataTable arg1) throws Throwable {
+    public void i_fill_in_delivery_address_information(DataTable arg) throws Throwable {
 
     }
 
