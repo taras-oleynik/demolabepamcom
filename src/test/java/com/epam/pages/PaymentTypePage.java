@@ -16,6 +16,12 @@ public class PaymentTypePage extends AbstractPage {
     @FindBy(css = ".subtotal")
     private WebElement subTotal;
 
+    @FindBy(css="#PaymentTypeSelection_ACCOUNT")
+    private WebElement accountPaymentRadioButton;
+
+    @FindBy(css="#choosePaymentType_continue_button")
+    private WebElement nextButton;
+
 
     public String getOrderSubTotal() {
 
@@ -27,5 +33,15 @@ public class PaymentTypePage extends AbstractPage {
 
 
         return total.getText();
+    }
+
+    public void selectAccountPaymentRadioButton(){
+        accountPaymentRadioButton.click();
+    }
+
+    public ShippingMethodPage clickNextButton(){
+
+        nextButton.click();
+        return new ShippingMethodPage();
     }
 }

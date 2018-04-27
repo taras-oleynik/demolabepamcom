@@ -50,4 +50,6 @@ public class AbstractPage {
         WebDriverWait wait = new WebDriverWait(getDriver(), 5L);
         wait.until(ExpectedConditions.textToBePresentInElementValue(elem,text));
     }
+
+
 }

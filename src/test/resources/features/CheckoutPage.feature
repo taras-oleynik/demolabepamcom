@@ -18,14 +18,14 @@ Feature: Desktop Checkout for Guest User
     And I have the following final review
       | Subtotal | Total  |
       | $39.00   | $39.00 |
-  #  And I fill in delivery address information
-   #   | Country       | Title | First Name | Last Name | Address Line 1  | City      | Region       | Post Code  |
-  #    | United States | Mr.   | John       | Doe       | 16 Sandy Palace | Honesdale | Pennsylvania | 18431-0000 |
-  #  When I press "Next" button on delivery address page
+    And I submit payment information and press "Next" button on PAYMENT TYPE page
+    #   | Country       | Title | First Name | Last Name | Address Line 1  | City      | Region       | Post Code  |
+     # a | United States | Mr.   | John       | Doe       | 16 Sandy Palace | Honesdale | Pennsylvania | 18431-0000 |
+    When I press "Next" button on SHIPPING METHOD page
   #  And I am redirected to multicheckout delivery method page
-  #  And I have the following final review
-  #    | Subtotal | Delivery | Tax   | Total   |
-  #    | $99.85   | $9.99    | $5.49 | $115.33 |
+   And I have the following on FINAL REVIEW page
+      | Subtotal | Delivery | Total  |
+      | $39.00   | $9.99    | $48.99 |
    # And I select "STANDARD DELIVERY - 3-5 BUSINESS DAYS - $9.99" delivery method
    # And I press "Next" button on delivery method page
   #  And I am redirected to multicheckout payment method page

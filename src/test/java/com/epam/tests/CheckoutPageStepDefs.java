@@ -25,6 +25,8 @@ public class CheckoutPageStepDefs {
     CartPage cartPage = new CartPage();
     SignInPage signInPage = new SignInPage();
     PaymentTypePage paymentTypePage = new PaymentTypePage();
+    ShippingMethodPage shippingMethodPage = new ShippingMethodPage();
+    FinalReviewPage finalReviewPage = new FinalReviewPage();
 
     //Given I select "Add to cart" for product "693923"
     @Given("^I select \"([^\"]*)\" for product \"([^\"]*)\"$")
@@ -75,35 +77,43 @@ public class CheckoutPageStepDefs {
     public void iSetAsPassword(String password) throws Throwable {
         signInPage.setPassword(password);
         signInPage.clickOnLoginAndCheckoutButton();
-        Thread.sleep(2000);
+
     }
 
     @Given("^I have the following final review$")
     public void iHaveFinalReview(DataTable filalReviewTable) throws Throwable {
         List<List<String>> data = filalReviewTable.raw();
         assertEquals(data.get(1).get(0), paymentTypePage.getOrderSubTotal().replaceAll("\\w+\\:\\n", ""));
-        assertEquals(data.get(1).get(0), paymentTypePage.getOrderTotal().replaceAll("[^\\d\\\\.\\\\$]", ""));
+        assertEquals(data.get(1).get(1), paymentTypePage.getOrderTotal().replaceAll("[^\\d\\\\.\\\\$]", ""));
     }
 
-    @Given("^I fill in delivery address information$")
-    public void i_fill_in_delivery_address_information(DataTable arg) throws Throwable {
+    @Given("^I submit payment information and press \"([^\"]*)\" button on PAYMENT TYPE page$")
+    public void submitPaymentInformationAndPressButtonOnPAYMENT_TYPE_page(String buttonName) throws Throwable {
+
+        paymentTypePage.selectAccountPaymentRadioButton();
+        paymentTypePage.clickNextButton();
+    }
+
+    @When("^I press \"([^\"]*)\" button on SHIPPING METHOD page$")
+    public void iPressButtonOnSHIPPING_METHOD_page(String buttonName) throws Throwable {
+        shippingMethodPage.clickonNextButton();
+
 
     }
 
-    @When("^I press \"([^\"]*)\" button on delivery address page$")
-    public void i_press_button_on_delivery_address_page(String arg1) throws Throwable {
 
-    }
-
-    @When("^I am redirected to multicheckout delivery method page$")
+   /* @When("^I am redirected to multicheckout delivery method page$")
     public void i_am_redirected_to_multicheckout_delivery_method_page() throws Throwable {
 
-    }
-
-   /* @When("^I have the following final review$")
-    public void i_have_the_following_final_review(DataTable arg1) throws Throwable {
-
     }*/
+
+    @When("^I have the following on FINAL REVIEW page$")
+    public void i_have_the_following_final_review(DataTable filalReviewTable) throws Throwable {
+        List<List<String>> data = filalReviewTable.raw();
+        assertEquals(data.get(1).get(0), finalReviewPage.getSubtotalText());
+        assertEquals(data.get(1).get(1), finalReviewPage.getDeliveryText());
+        assertEquals(data.get(1).get(2), finalReviewPage.getOrderTotalText());
+    }
 
     @When("^I select \"([^\"]*)\" delivery method$")
     public void i_select_delivery_method(String arg1) throws Throwable {
